@@ -1,6 +1,9 @@
+import { BigInteger } from '../esm/biginteger/index.js';
+
 import { deepStrictEqual, throws } from 'assert';
 import { describe, should } from 'micro-should';
 import * as fc from 'fast-check';
+
 import { ed448, ed448ph, x448 } from '../esm/ed448.js';
 import { bytesToHex, concatBytes, hexToBytes, randomBytes } from '@noble/hashes/utils';
 import { numberToBytesLE } from '../esm/abstract/utils.js';
@@ -8,6 +11,11 @@ import { numberToBytesLE } from '../esm/abstract/utils.js';
 import { default as ed448vectorsOld } from './ed448/ed448_test_OLD.json' assert { type: 'json' };
 import { default as ed448vectors } from './wycheproof/ed448_test.json' assert { type: 'json' };
 import { default as x448vectors } from './wycheproof/x448_test.json' assert { type: 'json' };
+
+const equalBigInteger = (actual, expected) => actual.toString() === expected.toString();
+const toNativeBigInt = (biginteger) => BigInt(biginteger.toString());
+const _2n = BigInteger.new(2);
+const _3n = BigInteger.new(3);
 
 describe('ed448', () => {
   const ed = ed448;
@@ -17,29 +25,29 @@ describe('ed448', () => {
 
   should(`Basic`, () => {
     const G1 = Point.BASE.toAffine();
-    deepStrictEqual(
+    equalBigInteger(
       G1.x,
       224580040295924300187604334099896036246789641632564134246125461686950415467406032909029192869357953282578032075146446173674602635247710n
     );
-    deepStrictEqual(
+    equalBigInteger(
       G1.y,
       298819210078481492676017930443930673437544040154080242095928241372331506189835876003536878655418784733982303233503462500531545062832660n
     );
-    const G2 = Point.BASE.multiply(2n).toAffine();
-    deepStrictEqual(
+    const G2 = Point.BASE.multiply(_2n).toAffine();
+    equalBigInteger(
       G2.x,
       484559149530404593699549205258669689569094240458212040187660132787056912146709081364401144455726350866276831544947397859048262938744149n
     );
-    deepStrictEqual(
+    equalBigInteger(
       G2.y,
       494088759867433727674302672526735089350544552303727723746126484473087719117037293890093462157703888342865036477787453078312060500281069n
     );
-    const G3 = Point.BASE.multiply(3n).toAffine();
-    deepStrictEqual(
+    const G3 = Point.BASE.multiply(_3n).toAffine();
+    equalBigInteger(
       G3.x,
       23839778817283171003887799738662344287085130522697782688245073320169861206004018274567429238677677920280078599146891901463786155880335n
     );
-    deepStrictEqual(
+    equalBigInteger(
       G3.y,
       636046652612779686502873775776967954190574036985351036782021535703553242737829645273154208057988851307101009474686328623630835377952508n
     );
@@ -47,8 +55,8 @@ describe('ed448', () => {
 
   should('Basic/decompress', () => {
     const G1 = Point.BASE;
-    const G2 = Point.BASE.multiply(2n);
-    const G3 = Point.BASE.multiply(3n);
+    const G2 = Point.BASE.multiply(_2n);
+    const G3 = Point.BASE.multiply(_3n);
     const points = [G1, G2, G3];
     const getXY = (p) => p.toAffine();
     for (const p of points) deepStrictEqual(getXY(Point.fromHex(p.toHex())), getXY(p));
@@ -344,7 +352,7 @@ describe('ed448', () => {
     fc.assert(
       fc.property(
         fc.hexaString({ minLength: 2, maxLength: 57 }),
-        fc.bigInt(2n, ed.CURVE.n),
+        fc.bigInt(2n, toNativeBigInt(ed.CURVE.n)),
         (message, privateKey) => {
           const publicKey = ed.getPublicKey(to57Bytes(privateKey));
           const signature = ed.sign(to57Bytes(message), to57Bytes(privateKey));
@@ -361,7 +369,7 @@ describe('ed448', () => {
       fc.property(
         fc.array(fc.integer({ min: 0x00, max: 0xff })),
         fc.array(fc.integer({ min: 0x00, max: 0xff })),
-        fc.bigInt(1n, ed.CURVE.n),
+        fc.bigInt(1n, toNativeBigInt(ed.CURVE.n)),
         (bytes, wrongBytes, privateKey) => {
           const message = new Uint8Array(bytes);
           const wrongMessage = new Uint8Array(wrongBytes);

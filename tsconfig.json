@@ -11,10 +11,14 @@
         "moduleResolution": "node",
         "noUnusedLocals": true,
         "baseUrl": ".",
+        "allowJs": true,
+        "declarationDir": "./declarations",
+        "esModuleInterop": true
     },
-    "include": ["src"],
+    "include": ["src/ed448.ts", "src/biginteger"],
     "exclude": [
         "node_modules",
         "*.d.ts"
     ],
+
 }

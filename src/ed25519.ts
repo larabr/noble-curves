@@ -303,9 +303,9 @@ const D_MINUS_ONE_SQ = BigInt(
 // Calculates 1/√(number)
 const invertSqrt = (number: bigint) => uvRatio(_1n, number);
 
-const MAX_255B = BigInt('0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
+const MAX_255B = BigInteger.new('0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
 const bytes255ToNumberLE = (bytes: Uint8Array) =>
-  ed25519.CURVE.Fp.create(bytesToNumberLE(bytes) & MAX_255B);
+  ed25519.CURVE.Fp.create(bytesToNumberLE(bytes).ibitwiseAnd(MAX_255B));
 
 type ExtendedPoint = ExtPointType;
 

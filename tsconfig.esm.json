@@ -7,14 +7,16 @@
         "moduleResolution": "node16",
         "noUnusedLocals": true,
         "sourceMap": true,
+        "incremental": true,
         "baseUrl": ".",
+        "esModuleInterop": true,
         "paths": {
             "@noble/hashes/crypto": [ "src/crypto" ]
         },
     },
-    "include": ["src"],
+    "include": ["src/ed448.ts", "src/biginteger"],
     "exclude": [
         "node_modules",
-        "lib",
-    ],
+        "*.d.ts"
+    ]
 }
