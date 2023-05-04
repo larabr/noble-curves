@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 type Hex = string | Uint8Array;
 export type CurveType = {
     P: BigInteger;
@@ -25,4 +25,3 @@ export type CurveFn = {
 };
 export declare function montgomery(curveDef: CurveType): CurveFn;
 export {};
-//# sourceMappingURL=montgomery.d.ts.map

@@ -1,7 +1,7 @@
 import * as ut from './utils.js';
 import { FHash, Hex } from './utils.js';
 import { Group, GroupConstructor, BasicCurve, AffinePoint } from './curve.js';
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 export type CurveType = BasicCurve<BigInteger> & {
     a: BigInteger;
     d: BigInteger;
@@ -87,4 +87,3 @@ export type CurveFn = {
 };
 export declare function twistedEdwards(curveDef: CurveType): CurveFn;
 export {};
-//# sourceMappingURL=edwards.d.ts.map

@@ -1,4 +1,5 @@
-import { BigInteger } from './biginteger/index.js';
+/*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+import { BigInteger } from '@noble/hashes/biginteger';
 export declare const ed448: import("./abstract/edwards.js").CurveFn;
 export declare const ed448ph: import("./abstract/edwards.js").CurveFn;
 export declare const x448: import("./abstract/montgomery.js").CurveFn;
@@ -14,4 +15,3 @@ export declare function edwardsToMontgomeryPub(edwardsPub: string | Uint8Array):
 export declare const edwardsToMontgomery: typeof edwardsToMontgomeryPub;
 export declare const hashToCurve: (msg: Uint8Array, options?: import("./abstract/hash-to-curve.js").htfBasicOpts | undefined) => import("./abstract/hash-to-curve.js").H2CPoint<BigInteger>;
 export declare const encodeToCurve: (msg: Uint8Array, options?: import("./abstract/hash-to-curve.js").htfBasicOpts | undefined) => import("./abstract/hash-to-curve.js").H2CPoint<BigInteger>;
-//# sourceMappingURL=ed448.d.ts.map

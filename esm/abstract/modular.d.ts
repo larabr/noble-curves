@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 export declare function mod(a: BigInteger, b: BigInteger): BigInteger;
 /**
  * Efficiently raise num to power and do modular division.
@@ -82,4 +82,3 @@ export declare function FpSqrtEven<T>(Fp: IField<T>, elm: T): T;
  */
 export declare function hashToPrivateScalar(hash: string | Uint8Array, groupOrder: BigInteger, isLE?: boolean): BigInteger;
 export {};
-//# sourceMappingURL=modular.d.ts.map

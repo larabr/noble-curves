@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 export type Hex = Uint8Array | string;
 export type PrivKey = Hex | bigint;
 export type CHash = {
@@ -90,4 +90,3 @@ type ValMap<T extends Record<string, any>> = {
 };
 export declare function validateObject<T extends Record<string, any>>(object: T, validators: ValMap<T>, optValidators?: ValMap<T>): T;
 export {};
-//# sourceMappingURL=utils.d.ts.map

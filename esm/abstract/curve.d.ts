@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 import { IField } from './modular.js';
 export type AffinePoint<T> = {
     x: T;
@@ -68,4 +68,3 @@ export declare function validateBasic<FP, T>(curve: BasicCurve<FP> & T): Readonl
 } & BasicCurve<FP> & T & {
     p: BigInteger;
 }>;
-//# sourceMappingURL=curve.d.ts.map
