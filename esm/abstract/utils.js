@@ -1,6 +1,6 @@
 // TODOOOOOO use noble-hashes utils instead
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 const _2n = Object.freeze(BigInteger.new(2));
 const u8a = (a) => a instanceof Uint8Array;
 const hexes = Array.from({ length: 256 }, (v, i) => i.toString(16).padStart(2, '0'));

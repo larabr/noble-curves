@@ -4,7 +4,7 @@ import { mod } from './modular.js';
 import * as ut from './utils.js';
 import { ensureBytes, FHash, Hex } from './utils.js';
 import { Group, GroupConstructor, wNAF, BasicCurve, validateBasic, AffinePoint } from './curve.js';
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 
 // Be friendly to bad ECMAScript parsers by not using bigint literals
 // prettier-ignore

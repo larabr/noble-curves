@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 import type { Group, GroupConstructor, AffinePoint } from './curve.js';
 import { mod, IField } from './modular.js';
 import { bytesToNumberBE, CHash, concatBytes, utf8ToBytes, validateObject } from './utils.js';

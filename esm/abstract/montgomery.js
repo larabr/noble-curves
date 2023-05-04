@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 import { mod, pow } from './modular.js';
 import { bytesToNumberLE, ensureBytes, numberToBytesLE, validateObject } from './utils.js';
 const _0n = Object.freeze(BigInteger.new(0));

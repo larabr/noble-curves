@@ -1,5 +1,5 @@
 import { should } from 'micro-should';
-Error.stackTraceLimit = 20
+Error.stackTraceLimit = 20;
 // Should be first to catch obvious things
 // import './basic.test.js';
 // import './nist.test.js';

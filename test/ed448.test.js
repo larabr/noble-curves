@@ -1,4 +1,4 @@
-import { BigInteger } from '../esm/biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 
 import { deepStrictEqual, throws } from 'assert';
 import { describe, should } from 'micro-should';

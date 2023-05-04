@@ -2,7 +2,7 @@
 
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 
 const _2n = Object.freeze(BigInteger.new(2));
 const u8a = (a: any): a is Uint8Array => a instanceof Uint8Array;

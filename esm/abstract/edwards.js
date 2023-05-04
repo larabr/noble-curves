@@ -4,7 +4,7 @@ import { mod } from './modular.js';
 import * as ut from './utils.js';
 import { ensureBytes } from './utils.js';
 import { wNAF, validateBasic } from './curve.js';
-import { BigInteger } from '../biginteger/index.js';
+import { BigInteger } from '@noble/hashes/biginteger';
 // Be friendly to bad ECMAScript parsers by not using bigint literals
 // prettier-ignore
 const _0n = Object.freeze(BigInteger.new(0));
