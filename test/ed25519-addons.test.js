@@ -1,5 +1,5 @@
-import { sha512 } from '@noble/hashes/sha512';
-import { bytesToHex as hex, hexToBytes } from '@noble/hashes/utils';
+import { sha512 } from '@openpgp/noble-hashes/sha512';
+import { bytesToHex as hex, hexToBytes } from '@openpgp/noble-hashes/utils';
 import { deepStrictEqual, throws } from 'assert';
 import { describe, should } from 'micro-should';
 import { bytesToNumberLE, numberToBytesLE } from '../esm/abstract/utils.js';

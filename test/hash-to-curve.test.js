@@ -1,10 +1,10 @@
 import { deepStrictEqual } from 'assert';
 import { describe, should } from 'micro-should';
-import { bytesToHex } from '@noble/hashes/utils';
+import { bytesToHex } from '@openpgp/noble-hashes/utils';
 // Generic tests for all curves in package
-import { sha256 } from '@noble/hashes/sha256';
-import { sha512 } from '@noble/hashes/sha512';
-import { shake128, shake256 } from '@noble/hashes/sha3';
+import { sha256 } from '@openpgp/noble-hashes/sha256';
+import { sha512 } from '@openpgp/noble-hashes/sha512';
+import { shake128, shake256 } from '@openpgp/noble-hashes/sha3';
 import * as secp256r1 from '../esm/p256.js';
 import * as secp384r1 from '../esm/p384.js';
 import * as secp521r1 from '../esm/p521.js';

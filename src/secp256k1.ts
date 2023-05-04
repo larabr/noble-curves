@@ -1,6 +1,6 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { sha256 } from '@noble/hashes/sha256';
-import { randomBytes } from '@noble/hashes/utils';
+import { sha256 } from '@openpgp/noble-hashes/sha256';
+import { randomBytes } from '@openpgp/noble-hashes/utils';
 import { Field, mod, pow2 } from './abstract/modular.js';
 import { ProjPointType as PointType, mapToCurveSimpleSWU } from './abstract/weierstrass.js';
 import type { Hex, PrivKey } from './abstract/utils.js';

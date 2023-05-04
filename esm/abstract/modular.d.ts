@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 export declare function mod(a: BigInteger, b: BigInteger): BigInteger;
 /**
  * Efficiently raise num to power and do modular division.

@@ -50,9 +50,9 @@ import { default as secp521r1_sha3_512_test } from './wycheproof/ecdsa_secp521r1
 import { default as secp521r1_sha512_test } from './wycheproof/ecdsa_secp521r1_sha512_test.json' assert { type: 'json' };
 import { default as secp521r1_shake256_test } from './wycheproof/ecdsa_secp521r1_shake256_test.json' assert { type: 'json' };
 
-import { sha3_224, sha3_256, sha3_384, sha3_512, shake128, shake256 } from '@noble/hashes/sha3';
-import { sha512, sha384 } from '@noble/hashes/sha512';
-import { sha224, sha256 } from '@noble/hashes/sha256';
+import { sha3_224, sha3_256, sha3_384, sha3_512, shake128, shake256 } from '@openpgp/noble-hashes/sha3';
+import { sha512, sha384 } from '@openpgp/noble-hashes/sha512';
+import { sha224, sha256 } from '@openpgp/noble-hashes/sha256';
 
 // TODO: maybe add to noble-hashes?
 const wrapShake = (shake, dkLen) => {

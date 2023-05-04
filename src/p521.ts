@@ -1,6 +1,6 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 import { createCurve } from './_shortw_utils.js';
-import { sha512 } from '@noble/hashes/sha512';
+import { sha512 } from '@openpgp/noble-hashes/sha512';
 import { Field } from './abstract/modular.js';
 import { mapToCurveSimpleSWU } from './abstract/weierstrass.js';
 import { createHasher } from './abstract/hash-to-curve.js';

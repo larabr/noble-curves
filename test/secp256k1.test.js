@@ -1,4 +1,4 @@
-import { hexToBytes, bytesToHex as hex } from '@noble/hashes/utils';
+import { hexToBytes, bytesToHex as hex } from '@openpgp/noble-hashes/utils';
 import { deepStrictEqual, throws } from 'assert';
 import * as fc from 'fast-check';
 import { readFileSync } from 'fs';

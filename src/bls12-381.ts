@@ -27,8 +27,8 @@
 // - `e(G, S) = e(G, SUM(n)(Si)) = MUL(n)(e(G, Si))` - signature aggregation
 // Filecoin uses little endian byte arrays for private keys -
 // so ensure to reverse byte order if you'll use it with FIL.
-import { sha256 } from '@noble/hashes/sha256';
-import { randomBytes } from '@noble/hashes/utils';
+import { sha256 } from '@openpgp/noble-hashes/sha256';
+import { randomBytes } from '@openpgp/noble-hashes/utils';
 import { bls, CurveFn } from './abstract/bls.js';
 import * as mod from './abstract/modular.js';
 import {

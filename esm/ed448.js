@@ -1,7 +1,7 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '@noble/hashes/biginteger';
-import { shake256 } from '@noble/hashes/sha3';
-import { concatBytes, randomBytes, utf8ToBytes, wrapConstructor } from '@noble/hashes/utils';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
+import { shake256 } from '@openpgp/noble-hashes/sha3';
+import { concatBytes, randomBytes, utf8ToBytes, wrapConstructor } from '@openpgp/noble-hashes/utils';
 import { twistedEdwards } from './abstract/edwards.js';
 import { mod, pow2, Field } from './abstract/modular.js';
 import { montgomery } from './abstract/montgomery.js';

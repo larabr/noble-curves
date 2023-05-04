@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 type Hex = string | Uint8Array;
 export type CurveType = {
     P: BigInteger;

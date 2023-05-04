@@ -1,11 +1,11 @@
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 
 import { deepStrictEqual, throws } from 'assert';
 import { describe, should } from 'micro-should';
 import * as fc from 'fast-check';
 
 import { ed448, ed448ph, x448 } from '../esm/ed448.js';
-import { bytesToHex, concatBytes, hexToBytes, randomBytes } from '@noble/hashes/utils';
+import { bytesToHex, concatBytes, hexToBytes, randomBytes } from '@openpgp/noble-hashes/utils';
 import { numberToBytesLE } from '../esm/abstract/utils.js';
 // Old vectors allow to test sign() because they include private key
 import { default as ed448vectorsOld } from './ed448/ed448_test_OLD.json' assert { type: 'json' };

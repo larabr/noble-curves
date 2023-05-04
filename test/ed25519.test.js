@@ -1,6 +1,6 @@
 import { deepStrictEqual, strictEqual, throws } from 'assert';
 import { readFileSync } from 'fs';
-import { bytesToHex, concatBytes, hexToBytes, utf8ToBytes, randomBytes } from '@noble/hashes/utils';
+import { bytesToHex, concatBytes, hexToBytes, utf8ToBytes, randomBytes } from '@openpgp/noble-hashes/utils';
 import * as fc from 'fast-check';
 import { describe, should } from 'micro-should';
 import { ed25519 as ed, ED25519_TORSION_SUBGROUP, numberToBytesLE } from './ed25519.helpers.js';

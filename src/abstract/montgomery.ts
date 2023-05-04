@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 import { mod, pow } from './modular.js';
 import { bytesToNumberLE, ensureBytes, numberToBytesLE, validateObject } from './utils.js';
 

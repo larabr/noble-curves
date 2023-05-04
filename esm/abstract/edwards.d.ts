@@ -1,7 +1,7 @@
 import * as ut from './utils.js';
 import { FHash, Hex } from './utils.js';
 import { Group, GroupConstructor, BasicCurve, AffinePoint } from './curve.js';
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 export type CurveType = BasicCurve<BigInteger> & {
     a: BigInteger;
     d: BigInteger;

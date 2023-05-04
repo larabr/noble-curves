@@ -1,6 +1,6 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 // Abelian group utilities
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 import { IField, validateField, nLength } from './modular.js';
 import { validateObject } from './utils.js';
 const _0n = Object.freeze(BigInteger.new(0));

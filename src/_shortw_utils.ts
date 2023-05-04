@@ -1,6 +1,6 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { hmac } from '@noble/hashes/hmac';
-import { concatBytes, randomBytes } from '@noble/hashes/utils';
+import { hmac } from '@openpgp/noble-hashes/hmac';
+import { concatBytes, randomBytes } from '@openpgp/noble-hashes/utils';
 import { weierstrass, CurveType } from './abstract/weierstrass.js';
 import { CHash } from './abstract/utils.js';
 
