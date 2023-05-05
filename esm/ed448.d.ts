@@ -1,5 +1,5 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-import { BigInteger } from '@noble/hashes/biginteger';
+import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 export declare const ed448: import("./abstract/edwards.js").CurveFn;
 export declare const ed448ph: import("./abstract/edwards.js").CurveFn;
 export declare const x448: import("./abstract/montgomery.js").CurveFn;

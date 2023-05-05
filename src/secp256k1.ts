@@ -99,7 +99,7 @@ const TAGGED_HASH_PREFIXES: { [tag: string]: Uint8Array } = {};
 function taggedHash(tag: string, ...messages: Uint8Array[]): Uint8Array {
   let tagP = TAGGED_HASH_PREFIXES[tag];
   if (tagP === undefined) {
-    const tagH = sha256(Uint8Array.from(tag, (c) => c.charCodeAt(0)));
+    const tagH = sha256(Uint8Array.from(tag, (c) => c.charCodeAt(0))); // TODO replace Uint8Array.from
     tagP = concatBytes(tagH, tagH);
     TAGGED_HASH_PREFIXES[tag] = tagP;
   }

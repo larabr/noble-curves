@@ -100,7 +100,7 @@ export function ensureBytes(title: string, hex: Hex, expectedLength?: number): U
   } else if (u8a(hex)) {
     // Uint8Array.from() instead of hash.slice() because node.js Buffer
     // is instance of Uint8Array, and its slice() creates **mutable** copy
-    res = Uint8Array.from(hex);
+    res = new Uint8Array(hex);
   } else {
     throw new Error(`${title} must be hex string or Uint8Array`);
   }
@@ -177,7 +177,7 @@ export const bitMask = (n: number) => (_2n.leftShift(BigInteger.new(n - 1))).ide
 // DRBG
 
 const u8n = (data?: any) => new Uint8Array(data); // creates Uint8Array
-const u8fr = (arr: any) => Uint8Array.from(arr); // another shortcut
+const u8fr = (arr: any) => new Uint8Array(arr); // another shortcut
 type Pred<T> = (v: Uint8Array) => T | undefined;
 /**
  * Minimal HMAC-DRBG from NIST 800-90 for RFC6979 sigs.
