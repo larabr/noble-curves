@@ -618,8 +618,8 @@ describe('ed448', () => {
       let s = signature.slice(56, 112);
 
       s = bytesToHex(s.slice().reverse());
-      s = BigInt('0x' + s);
-      s = s + ed448.CURVE.n;
+      s = BigInteger.new('0x' + s);
+      s = s.add(ed448.CURVE.n);
       s = numberToBytesLE(s, 56);
 
       const sig_invalid = concatBytes(R, s);
@@ -735,7 +735,7 @@ describe('ed448', () => {
       const { x, y } = Point.BASE;
       const { Fp } = ed448.CURVE;
       // const invX = Fp.invert(x * x); // x²
-      const u = Fp.div(Fp.create(y * y), Fp.create(x * x)); // (y²/x²)
+      const u = Fp.div(Fp.create(y.mul(y)), Fp.create(x.mul(x))); // (y²/x²)
       // const u = Fp.create(y * y * invX);
       deepStrictEqual(numberToBytesLE(u, 56), x448.GuBytes);
     });
