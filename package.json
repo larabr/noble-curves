@@ -26,7 +26,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@openpgp/noble-hashes": "git+https://git@github.com/larabr/noble-hashes.git#de66a360ecf450fa1786fc4c1f8793cc2cca0eb5"
+    "@openpgp/noble-hashes": "1.3.2-1"
   },
   "devDependencies": {
     "@types/node": "18.11.18",
