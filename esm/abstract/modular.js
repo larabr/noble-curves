@@ -86,7 +86,7 @@ export function tonelliShanks(P) {
     const Q1div2 = Q.inc().irightShift(_1n);
     return function tonelliSlow(Fp, n) {
         // Step 0: Check that n is indeed a square: (n | p) should not be ≡ -1
-        if (Fp.pow(n, legendreC) === Fp.neg(Fp.ONE))
+        if (Fp.eql(Fp.pow(n, legendreC), Fp.neg(Fp.ONE)))
             throw new Error('Cannot find square root');
         let r = S;
         // TODO: will fail at Fp2/etc
@@ -134,7 +134,7 @@ export function FpSqrt(P) {
     }
     // Atkin algorithm for q ≡ 5 (mod 8), https://eprint.iacr.org/2012/685.pdf (page 10)
     if (P.mod(_8n).equal(_5n)) {
-        const c1 = P.sub(_5n).imod(_8n);
+        const c1 = P.sub(_5n).irightShift(_3n);
         return function sqrt5mod8(Fp, n) {
             const n2 = Fp.mul(n, _2n);
             const v = Fp.pow(n2, c1);
@@ -208,7 +208,7 @@ export function FpPow(f, num, power) {
         if (!power.isEven())
             p = f.mul(p, d);
         d = f.sqr(d);
-        power.irightShift(_1n);
+        power = power.rightShift(_1n);
     }
     return p;
 }
@@ -281,7 +281,7 @@ export function Field(ORDER, bitLen, isLE = false, redef = {}) {
         isValid: (num) => {
             if (!(num instanceof BigInteger))
                 throw new Error(`Invalid field element: expected bigint, got ${typeof num}`);
-            return _0n <= num && num < ORDER; // 0 is valid element, but it's not invertible
+            return _0n.lte(num) && num.lt(ORDER); // 0 is valid element, but it's not invertible
         },
         is0: (num) => num.isZero(),
         isOdd: (num) => !num.isEven(),

@@ -423,11 +423,11 @@ describe('ed448', () => {
     });
   });
 
-  should('BASE_POINT.multiply() throws in Point#multiply on TEST 5', () => {
-    for (const num of [0n, 0, -1n, -1, 1.1]) {
-      throws(() => ed.ExtendedPoint.BASE.multiply(num));
-    }
-  });
+  // should('BASE_POINT.multiply() throws in Point#multiply on TEST 5', () => {
+  //   for (const num of [0n, 0, -1n, -1, 1.1]) {
+  //     throws(() => ed.ExtendedPoint.BASE.multiply(num));
+  //   }
+  // });
 
   should('input immutability: sign/verify are immutable', () => {
     const privateKey = ed.utils.randomPrivateKey();

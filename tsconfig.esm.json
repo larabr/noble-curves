@@ -1,16 +1,12 @@
 {
+    "extends": "./tsconfig.json",
     "compilerOptions": {
         "strict": true,
         "outDir": "esm",
-        "target": "es2020",
         "module": "es6",
-        "moduleResolution": "node16",
-        "noUnusedLocals": true,
-        "sourceMap": true,
-        "baseUrl": ".",
         "declaration": true
     },
-    "include": ["src/ed448.ts"],
+    "include": ["src/ed448.ts", "src/ed25519.ts"],
     "exclude": [
         "node_modules",
         "*.d.ts"

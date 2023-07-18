@@ -6,7 +6,7 @@ Error.stackTraceLimit = 20;
 // import './biginteger.test.js';
 
 import './ed448.test.js';
-// import './ed25519.test.js';
+import './ed25519.test.js';
 // import './ed25519-addons.test.js';
 // import './secp256k1.test.js';
 // import './secp256k1-schnorr.test.js';

@@ -27,7 +27,10 @@ module.exports = function(config) {
         ],
 
         // list of files / patterns to load in the browser
-        files: [{ pattern: 'test/browser.test.js', watched: false }],
+        files: [
+            { pattern: 'test/browser.test.js', watched: false },
+            { pattern: 'test/ed25519/vectors.txt', watched: false, included: false, served: true },
+        ],
 
         // list of files / patterns to exclude
         exclude: [],
