@@ -13,10 +13,9 @@ import { createHasher, expand_message_xmd } from './abstract/hash-to-curve.js';
  * - Ristretto cofactor elimination
  * - Elligator hash-to-group / point indistinguishability
  */
-const ED25519_P = BigInteger.new('57896044618658097711785492504343953926634992332820282019728792003956564819949');
+const ED25519_P = Object.freeze(BigInteger.new('57896044618658097711785492504343953926634992332820282019728792003956564819949'));
 // √(-1) aka √(a) aka 2^((p-1)/4)
-const ED25519_SQRT_M1 = BigInteger.new('19681161376707505956807079304988542015446066515923890162744021073123829784752');
-const _0n = Object.freeze(BigInteger.new(0));
+const ED25519_SQRT_M1 = Object.freeze(BigInteger.new('19681161376707505956807079304988542015446066515923890162744021073123829784752'));
 const _1n = Object.freeze(BigInteger.new(1));
 const _2n = Object.freeze(BigInteger.new(2));
 const _3n = Object.freeze(BigInteger.new(3));
@@ -64,14 +63,14 @@ function uvRatio(u, v) {
     const root1 = x; // First root candidate
     const root2 = mod(x.mul(ED25519_SQRT_M1), P); // Second root candidate
     const useRoot1 = vx2.equal(u); // If vx² = u (mod p), x is a square root
-    const useRoot2 = vx2.equal(mod(_0n.sub(u), P)); // If vx² = -u, set x <-- x * 2^((p-1)/4)
-    const noRoot = vx2.equal(mod(_0n.sub(u).imul(ED25519_SQRT_M1), P)); // There is no valid root, vx² = -u√(-1)
+    const useRoot2 = vx2.equal(mod(u.negate(), P)); // If vx² = -u, set x <-- x * 2^((p-1)/4)
+    const noRoot = vx2.equal(mod(u.negate().imul(ED25519_SQRT_M1), P)); // There is no valid root, vx² = -u√(-1)
     if (useRoot1)
         x = root1;
     if (useRoot2 || noRoot)
         x = root2; // We return root2 anyway, for const-time
     if (isNegativeLE(x, P))
-        x = mod(_0n.sub(x), P);
+        x = mod(x.negate(), P);
     return { isValid: useRoot1 || useRoot2, value: x };
 }
 // Just in case
@@ -273,7 +272,7 @@ function calcElligatorRistrettoMap(r0) {
     let { isValid: Ns_D_is_sq, value: s } = uvRatio(Ns, D); // 5
     let s_ = mod(s.mul(r0)); // 6
     if (!isNegativeLE(s_, P))
-        s_ = mod(_0n.sub(s_));
+        s_ = mod(s_.negate());
     if (!Ns_D_is_sq)
         s = s_; // 7
     if (!Ns_D_is_sq)
@@ -344,7 +343,7 @@ class RistPoint {
         const Dy = mod(I.mul(Dx).mul(v)); // 9
         let x = mod(s.add(s).imul(Dx)); // 10
         if (isNegativeLE(x, P))
-            x = mod(_0n.sub(x)); // 10
+            x = mod(x.negate()); // 10
         const y = mod(u1.mul(Dy)); // 11
         const t = mod(x.mul(y)); // 12
         if (!isValid || isNegativeLE(t, P) || y.isZero())
@@ -379,10 +378,10 @@ class RistPoint {
             D = D2; // 8
         }
         if (isNegativeLE(x.mul(zInv), P))
-            y = mod(_0n.sub(y)); // 9
+            y = mod(y.negate()); // 9
         let s = mod((z.sub(y)).mul(D)); // 10 (check footer's note, no sqrt(-a))
         if (isNegativeLE(s, P))
-            s = mod(_0n.sub(s));
+            s = mod(s.negate());
         return numberToBytesLE(s, 32); // 11
     }
     toHex() {

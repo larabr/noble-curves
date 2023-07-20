@@ -18,7 +18,7 @@ export function bytesToHex(bytes) {
     return hex;
 }
 export function numberToHexUnpadded(num) {
-    const hex = num.toString(16);
+    const hex = num instanceof BigInteger ? bytesToHex(num.toUint8Array()) : num.toString(16);
     return hex.length & 1 ? `0${hex}` : hex;
 }
 export function hexToNumber(hex) {
@@ -54,7 +54,7 @@ export function bytesToNumberBE(bytes) {
 export function bytesToNumberLE(bytes) {
     if (!u8a(bytes))
         throw new Error('Uint8Array expected');
-    return BigInteger.new(bytes.reverse());
+    return BigInteger.new(bytes.slice().reverse()); // reverse() is in place
 }
 export function numberToBytesBE(n, len) {
     return n.toUint8Array('be', len);

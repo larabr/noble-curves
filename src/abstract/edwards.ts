@@ -235,7 +235,7 @@ export function twistedEdwards(curveDef: CurveType): CurveFn {
 
     negate(): Point {
       // Flips point sign to a negative one (-x, y in affine coords)
-      return new Point(modP(_0n.sub(this.ex)), this.ey, this.ez, modP(_0n.sub(this.et)));
+      return new Point(modP(this.ex.negate()), this.ey, this.ez, modP(this.et.negate()));
     }
 
     // Fast algo for doubling Extended Point.
@@ -394,7 +394,7 @@ export function twistedEdwards(curveDef: CurveType): CurveFn {
       if (!zip215 && x.isZero() && isLastByteOdd)
         // if x=0 and x_0 = 1, fail
         throw new Error('Point.fromHex: x=0 and x_0=1');
-      if (isLastByteOdd !== isXOdd) x = modP(_0n.sub(x)); // if x_0 != x mod 2, set x = p-x
+      if (isLastByteOdd !== isXOdd) x = modP(x.negate()); // if x_0 != x mod 2, set x = p-x
       return Point.fromAffine({ x, y });
     }
     static fromPrivateKey(privKey: Hex) {

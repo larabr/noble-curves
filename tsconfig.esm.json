@@ -6,7 +6,7 @@
         "module": "es6",
         "declaration": true
     },
-    "include": ["src/ed448.ts", "src/ed25519.ts"],
+    "include": ["src/ed448.ts", "src/ed25519.ts", "src/secp256k1.ts"],
     "exclude": [
         "node_modules",
         "*.d.ts"

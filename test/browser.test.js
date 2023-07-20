@@ -1,6 +1,11 @@
 import { expect } from 'chai';
 import { ed448, x448 } from '../esm/ed448.js';
-import { ed25519, x25519 } from '../esm/ed25519.js';
+import { ed25519, x25519} from '../esm/ed25519.js';
+import { secp256k1 } from '../esm/secp256k1.js';
+
+import ecdsaSecp256k1Tests from './vectors/secp256k1/ecdsa.json' assert { type: 'json' };
+import ecdhSecp256k1Tests from './wycheproof/ecdh_secp256k1_test.json' assert { type: 'json' };
+import { bytesToHex } from '../esm/abstract/utils.js';
 
 const readTextFile = filename => new Promise(function(resolve, reject) {
   fetch('base/' + filename)
@@ -277,8 +282,8 @@ describe('Browser integration tests', () => {
     for (let i = 0; i < VECTORS_RFC8032.length; i++) {
       const v = VECTORS_RFC8032[i];
       it(`RFC8032/${i}`, () => {
-        expect(arrayToHexString(ed448.getPublicKey(v.secretKey))).to.equal(v.publicKey);
-        expect(arrayToHexString(ed448.sign(v.message, v.secretKey))).to.equal(v.signature);
+        expect(bytesToHex(ed448.getPublicKey(v.secretKey))).to.equal(v.publicKey);
+        expect(bytesToHex(ed448.sign(v.message, v.secretKey))).to.equal(v.signature);
         expect(ed448.verify(v.signature, v.message, v.publicKey)).to.be.true;
       });
     }
@@ -296,10 +301,10 @@ describe('Browser integration tests', () => {
         '3eb7a829b0cd20f5bcfc0b599b6feccf6da4627107bdb0d4f345b43027d8b972fc3e34fb4232a13ca706dcb57aec3dae07bdc1c67bf33609';
       const shared =
         '07fff4181ac6cc95ec1c16a94a0f74d12da232ce40a77552281d282bb60c0b56fd2464c335543936521c24403085d59a449a5037514a879d';
-      expect(alicePublic).to.equal(arrayToHexString(x448.getPublicKey(alicePrivate)));
-      expect(bobPublic).to.equal(arrayToHexString(x448.getPublicKey(bobPrivate)));
-      expect(arrayToHexString(x448.scalarMult(alicePrivate, bobPublic))).to.equal(shared);
-      expect(arrayToHexString(x448.scalarMult(bobPrivate, alicePublic))).to.equal(shared);
+      expect(alicePublic).to.equal(bytesToHex(x448.getPublicKey(alicePrivate)));
+      expect(bobPublic).to.equal(bytesToHex(x448.getPublicKey(bobPrivate)));
+      expect(bytesToHex(x448.scalarMult(alicePrivate, bobPublic))).to.equal(shared);
+      expect(bytesToHex(x448.scalarMult(bobPrivate, alicePublic))).to.equal(shared);
     });
   });
 
@@ -327,10 +332,10 @@ describe('Browser integration tests', () => {
 
         // Calculate
         const pub = ed25519.getPublicKey(priv);
-        expect(arrayToHexString(pub)).to.equal(expectedPub);
-        expect(arrayToHexString(pub)).to.equal(arrayToHexString(Point.fromHex(pub).toRawBytes()));
+        expect(bytesToHex(pub)).to.equal(expectedPub);
+        expect(bytesToHex(pub)).to.equal(bytesToHex(Point.fromHex(pub).toRawBytes()));
 
-        const signature = arrayToHexString(ed25519.sign(msg, priv));
+        const signature = bytesToHex(ed25519.sign(msg, priv));
         // console.log('vector', i);
         // expect(pub).toBe(expectedPub);
         expect(signature).to.equal(expectedSignature);
@@ -345,19 +350,41 @@ describe('Browser integration tests', () => {
       const bobPrivate = '5dab087e624a8a4b79e17f8b83800ee66f3bb1292618b6fd1c2f8b27ff88e0eb';
       const bobPublic = 'de9edb7d7b7dc1b4d35b61c2ece435373f8343c85b78674dadfc7e146f882b4f';
       const shared = '4a5d9d5ba4ce2de1728e3bf480350f25e07e21c947d19e3376f09b3c1e161742';
-      expect(alicePublic).to.equal(arrayToHexString(x25519.getPublicKey(alicePrivate)));
-      expect(bobPublic).to.equal(arrayToHexString(x25519.getPublicKey(bobPrivate)));
-      expect(arrayToHexString(x25519.scalarMult(alicePrivate, bobPublic))).to.equal(shared);
-      expect(arrayToHexString(x25519.scalarMult(bobPrivate, alicePublic))).to.equal(shared);
+      expect(alicePublic).to.equal(bytesToHex(x25519.getPublicKey(alicePrivate)));
+      expect(bobPublic).to.equal(bytesToHex(x25519.getPublicKey(bobPrivate)));
+      expect(bytesToHex(x25519.scalarMult(alicePrivate, bobPublic))).to.equal(shared);
+      expect(bytesToHex(x25519.scalarMult(bobPrivate, alicePublic))).to.equal(shared);
+    });
+  });
+
+  describe('secp256k1', () => {
+    it('ecdsa - create deterministic signatures with RFC 6979', () => {
+      for (const vector of ecdsaSecp256k1Tests.valid.slice(0, 20)) {
+        let usig = secp256k1.sign(vector.m, vector.d);
+        let sig = usig.toCompactHex();
+        const vsig = vector.signature;
+        expect(sig.slice(0, 64)).to.equal(vsig.slice(0, 64));
+        expect(sig.slice(64, 128)).to.equal(vsig.slice(64, 128));
+      }
+    });
+
+    it('ecdh - produce correct results', () => {
+      function derToPub(der) {
+        return der.slice(46); // TODO provisional
+      }
+
+      // TODO: Once der is there, run all tests.
+      for (const vector of ecdhSecp256k1Tests.testGroups[0].tests.slice(0, 20)) {
+        if (vector.result === 'invalid' || vector.private.length !== 64) {
+          expect(() => {
+            secp.getSharedSecret(vector.private, derToPub(vector.public), true);
+          }).to.throw();
+        } else if (vector.result === 'valid') {
+          const res = secp256k1.getSharedSecret(vector.private, derToPub(vector.public), true);
+          expect(hex(res.slice(1))).to.equal(`${vector.shared}`);
+        }
+      }
     });
   });
 });
 
-const arrayToHexString = (bytes) => {
-  const res = [];
-  for (let c = 0; c < bytes.length; c++) {
-    const hex = bytes[c].toString(16);
-    res.push(hex.length < 2 ? '0' + hex : hex);
-  }
-  return res.join('');
-};

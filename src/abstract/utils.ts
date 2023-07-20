@@ -8,7 +8,7 @@ const _2n = Object.freeze(BigInteger.new(2));
 const u8a = (a: any): a is Uint8Array => a instanceof Uint8Array;
 
 export type Hex = Uint8Array | string; // hex strings are accepted for simplicity
-export type PrivKey = Hex | bigint; // bigints are accepted to ease learning curve
+export type PrivKey = Hex | BigInteger; // bigints are accepted to ease learning curve
 export type CHash = {
   (message: Uint8Array | string): Uint8Array;
   blockLen: number;
@@ -31,8 +31,8 @@ export function bytesToHex(bytes: Uint8Array): string {
   return hex;
 }
 
-export function numberToHexUnpadded(num: number | bigint): string {
-  const hex = num.toString(16);
+export function numberToHexUnpadded(num: number | BigInteger): string {
+  const hex = num instanceof BigInteger ? bytesToHex(num.toUint8Array()) : num.toString(16);
   return hex.length & 1 ? `0${hex}` : hex;
 }
 
@@ -66,7 +66,7 @@ export function bytesToNumberBE(bytes: Uint8Array): BigInteger {
 }
 export function bytesToNumberLE(bytes: Uint8Array): BigInteger {
   if (!u8a(bytes)) throw new Error('Uint8Array expected');
-  return BigInteger.new(bytes.reverse());
+  return BigInteger.new(bytes.slice().reverse()); // reverse() is in place
 }
 
 export function numberToBytesBE(n: BigInteger, len: number): Uint8Array {
@@ -76,7 +76,7 @@ export function numberToBytesLE(n: BigInteger, len: number): Uint8Array {
   return n.toUint8Array('le', len);
 }
 // Returns variable number bytes (minimal bigint encoding?)
-export function numberToVarBytesBE(n: number | bigint): Uint8Array {
+export function numberToVarBytesBE(n: number | BigInteger): Uint8Array {
   return hexToBytes(numberToHexUnpadded(n));
 }
 
@@ -163,7 +163,7 @@ export const bitGet = (n: BigInteger, pos: number) => n.getBit(pos);
 /**
  * Sets single bit at position.
  */
-export const bitSet = (n: bigint, pos: number, value: boolean) => {
+export const bitSet = (n: BigInteger, pos: number, value: boolean) => {
   throw new Error('unsupported bitSet')
   // return n | ((value ? _1n : _0n) << BigInt(pos));
 };

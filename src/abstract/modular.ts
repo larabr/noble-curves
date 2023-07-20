@@ -10,7 +10,7 @@ import {
   ensureBytes,
   validateObject,
 } from './utils.js';
-// prettier-ignore
+
 const _0n = Object.freeze(BigInteger.new(0));
 const _1n = Object.freeze(BigInteger.new(1));
 const _2n = Object.freeze(BigInteger.new(2));
@@ -350,7 +350,7 @@ export function Field(
     },
     is0: (num) => num.isZero(),
     isOdd: (num) => !num.isEven(),
-    neg: (num) => mod(_0n.sub(num), ORDER),
+    neg: (num) => mod(num.negate(), ORDER),
     eql: (lhs, rhs) => lhs.equal(rhs),
 
     sqr: (num) => mod(num.mul(num), ORDER),

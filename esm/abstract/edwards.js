@@ -152,7 +152,7 @@ export function twistedEdwards(curveDef) {
         }
         negate() {
             // Flips point sign to a negative one (-x, y in affine coords)
-            return new Point(modP(_0n.sub(this.ex)), this.ey, this.ez, modP(_0n.sub(this.et)));
+            return new Point(modP(this.ex.negate()), this.ey, this.ez, modP(this.et.negate()));
         }
         // Fast algo for doubling Extended Point.
         // https://hyperelliptic.org/EFD/g1p/auto-twisted-extended.html#doubling-dbl-2008-hwcd
@@ -311,7 +311,7 @@ export function twistedEdwards(curveDef) {
                 // if x=0 and x_0 = 1, fail
                 throw new Error('Point.fromHex: x=0 and x_0=1');
             if (isLastByteOdd !== isXOdd)
-                x = modP(_0n.sub(x)); // if x_0 != x mod 2, set x = p-x
+                x = modP(x.negate()); // if x_0 != x mod 2, set x = p-x
             return Point.fromAffine({ x, y });
         }
         static fromPrivateKey(privKey) {

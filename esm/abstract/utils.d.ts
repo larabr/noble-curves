@@ -1,7 +1,7 @@
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 export type Hex = Uint8Array | string;
-export type PrivKey = Hex | bigint;
+export type PrivKey = Hex | BigInteger;
 export type CHash = {
     (message: Uint8Array | string): Uint8Array;
     blockLen: number;
@@ -15,7 +15,7 @@ export type FHash = (message: Uint8Array | string) => Uint8Array;
  * @example bytesToHex(Uint8Array.from([0xca, 0xfe, 0x01, 0x23])) // 'cafe0123'
  */
 export declare function bytesToHex(bytes: Uint8Array): string;
-export declare function numberToHexUnpadded(num: number | bigint): string;
+export declare function numberToHexUnpadded(num: number | BigInteger): string;
 export declare function hexToNumber(hex: string): BigInteger;
 /**
  * @example hexToBytes('cafe0123') // Uint8Array.from([0xca, 0xfe, 0x01, 0x23])
@@ -25,7 +25,7 @@ export declare function bytesToNumberBE(bytes: Uint8Array): BigInteger;
 export declare function bytesToNumberLE(bytes: Uint8Array): BigInteger;
 export declare function numberToBytesBE(n: BigInteger, len: number): Uint8Array;
 export declare function numberToBytesLE(n: BigInteger, len: number): Uint8Array;
-export declare function numberToVarBytesBE(n: number | bigint): Uint8Array;
+export declare function numberToVarBytesBE(n: number | BigInteger): Uint8Array;
 /**
  * Takes hex string or Uint8Array, converts to Uint8Array.
  * Validates output length.
@@ -59,7 +59,7 @@ export declare const bitGet: (n: BigInteger, pos: number) => number;
 /**
  * Sets single bit at position.
  */
-export declare const bitSet: (n: bigint, pos: number, value: boolean) => never;
+export declare const bitSet: (n: BigInteger, pos: number, value: boolean) => never;
 /**
  * Calculate mask for N bits. Not using ** operator with bigints because of old engines.
  * Same as BigInt(`0b${Array(i).fill('1').join('')}`)
