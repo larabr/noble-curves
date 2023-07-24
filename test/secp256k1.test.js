@@ -1,6 +1,6 @@
 import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 import { hexToBytes, bytesToHex as hex } from '@openpgp/noble-hashes/utils';
-import { deepStrictEqual, throws } from 'assert';
+import { deepStrictEqual, throws, ok } from 'assert';
 import * as fc from 'fast-check';
 import { readFileSync } from 'fs';
 import { should, describe } from 'micro-should';
@@ -19,6 +19,14 @@ const Point = secp.ProjectivePoint;
 const privatesTxt = readFileSync('./test/vectors/secp256k1/privates-2.txt', 'utf-8');
 
 const toNativeBigInt = (biginteger) => BigInt(biginteger.toString());
+const fromNativeBigInt = (nativeBigInt) => BigInteger.new(nativeBigInt.toString());
+const deepStrictEqualWithBigInteger = (actual, expected, msg) => {
+  // BNBigInteger instances can differ slightly despite representing the same number
+  const deepToString = x => JSON.stringify(
+    x, (key, value) => value instanceof BigInteger ? value.toString() : value
+  );
+  return ok(deepToString(actual) === deepToString(expected), msg);
+}
 
 const FC_BIGINT = fc.bigInt(1n + 1n, toNativeBigInt(secp.CURVE.n) - 1n);
 // prettier-ignore
@@ -120,7 +128,7 @@ describe('secp256k1', () => {
     should('#toHex() roundtrip', () => {
       fc.assert(
         fc.property(FC_BIGINT, (x) => {
-          const point1 = Point.fromPrivateKey(BigInteger.new(x.toString()));
+          const point1 = Point.fromPrivateKey(fromNativeBigInt(x));
           const hex = point1.toHex(true);
           deepStrictEqual(Point.fromHex(hex).toHex(true), hex);
         })
@@ -185,8 +193,8 @@ describe('secp256k1', () => {
     should('.fromCompactHex() roundtrip', () => {
       fc.assert(
         fc.property(FC_BIGINT, FC_BIGINT, (r, s) => {
-          const sig = new secp.Signature(BigInteger.new(r.toString()), BigInteger.new(s.toString()));
-          deepStrictEqual(secp.Signature.fromCompact(sig.toCompactHex()), sig);
+          const sig = new secp.Signature(fromNativeBigInt(r), fromNativeBigInt(s));
+          deepStrictEqualWithBigInteger(secp.Signature.fromCompact(sig.toCompactHex()), sig);
         })
       );
     });
@@ -194,8 +202,8 @@ describe('secp256k1', () => {
     should('.fromDERHex() roundtrip', () => {
       fc.assert(
         fc.property(FC_BIGINT, FC_BIGINT, (r, s) => {
-          const sig = new secp.Signature(BigInteger.new(r.toString()), BigInteger.new(s.toString()));
-          deepStrictEqual(sigFromDER(sigToDER(sig)), sig);
+          const sig = new secp.Signature(fromNativeBigInt(r), fromNativeBigInt(s));
+          deepStrictEqualWithBigInteger(sigFromDER(sigToDER(sig)), sig);
         })
       );
     });
@@ -300,8 +308,8 @@ describe('secp256k1', () => {
     should('verify random signatures', () =>
       fc.assert(
         fc.property(FC_BIGINT, fc.hexaString({ minLength: 64, maxLength: 64 }), (privKey, msg) => {
-          const pub = secp.getPublicKey(BigInteger.new(privKey.toString()));
-          const sig = secp.sign(msg, BigInteger.new(privKey.toString()));
+          const pub = secp.getPublicKey( fromNativeBigInt(privKey) );
+          const sig = secp.sign(msg, fromNativeBigInt(privKey));
           deepStrictEqual(secp.verify(sig, msg, pub), true);
         })
       )

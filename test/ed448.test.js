@@ -1,6 +1,6 @@
 import { BigInteger } from '@openpgp/noble-hashes/biginteger';
 
-import { deepStrictEqual, throws } from 'assert';
+import { deepStrictEqual, throws, ok } from 'assert';
 import { describe, should } from 'micro-should';
 import * as fc from 'fast-check';
 
@@ -12,7 +12,7 @@ import { default as ed448vectorsOld } from './ed448/ed448_test_OLD.json' assert 
 import { default as ed448vectors } from './wycheproof/ed448_test.json' assert { type: 'json' };
 import { default as x448vectors } from './wycheproof/x448_test.json' assert { type: 'json' };
 
-const equalBigInteger = (actual, expected) => actual.toString() === expected.toString();
+const equalBigInteger = (actual, expected, msg) => ok(actual.toString() === expected.toString(), msg);
 const toNativeBigInt = (biginteger) => BigInt(biginteger.toString());
 const _2n = BigInteger.new(2);
 const _3n = BigInteger.new(3);
